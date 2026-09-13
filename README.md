@@ -26,7 +26,7 @@ These results verify implementation and event-log completeness; they are not evi
 
 ## Research artifacts
 
-- [Google Colab notebook](https://colab.research.google.com/github/cccc-0212/yichen-ps1-overleaf/blob/main/companion/notebooks/adaptive_tax_game.ipynb)
+- [Google Colab notebook](https://colab.research.google.com/github/cccc-0212/yichen-ps1-overleaf/blob/yichen_proposal/companion/notebooks/adaptive_tax_game.ipynb)
 - [Interactive Hugging Face game](https://huggingface.co/spaces/dku-comsci-econ206-2026/yichenshendemo)
 - `main.tex`: ACM-format proposal source
 - `figures/ps1_teaser.drawio`: editable Figure 1 master

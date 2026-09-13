@@ -29,8 +29,8 @@ These are programmed demonstrations and implementation checks, not estimates of 
 
 ## GitHub, Colab, and Hugging Face
 
-- GitHub project: <https://github.com/cccc-0212/yichen-ps1-overleaf-template>
-- Colab target after this notebook is pushed to `main`: <https://colab.research.google.com/github/cccc-0212/yichen-ps1-overleaf-template/blob/main/companion/notebooks/adaptive_tax_game.ipynb>
+- GitHub project: <https://github.com/cccc-0212/yichen-ps1-overleaf/tree/yichen_proposal>
+- Colab notebook on `yichen_proposal`: <https://colab.research.google.com/github/cccc-0212/yichen-ps1-overleaf/blob/yichen_proposal/companion/notebooks/adaptive_tax_game.ipynb>
 - Interactive Static Space: <https://huggingface.co/spaces/dku-comsci-econ206-2026/yichenshendemo>
 
 The Python/Colab companion verifies the model. The Hugging Face Space provides the interactive learning interface. Neither replaces the other.
