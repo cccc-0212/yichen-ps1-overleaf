@@ -1,0 +1,39 @@
+{
+  "evidence_class": "programmed demonstration",
+  "model": "adaptive-tax repeated game",
+  "one_shot_benchmark": {
+    "authority_opaque_strictly_dominant": true,
+    "pareto_superior_profile": "C/T",
+    "taxpayer_avoid_strictly_dominant": true,
+    "unique_one_shot_nash": "A/O"
+  },
+  "preset_results": {
+    "mixed_recovery": {
+      "authority_payoff": 19,
+      "complete_log": true,
+      "evidence_class": "programmed demonstration",
+      "final_trust": 90,
+      "path": ["C/T", "C/T", "A/T", "A/O", "C/T", "C/T", "C/T", "C/T"],
+      "rounds_completed": 8,
+      "taxpayer_payoff": 23
+    },
+    "opaque_breakdown": {
+      "authority_payoff": 11,
+      "complete_log": true,
+      "evidence_class": "programmed demonstration",
+      "final_trust": 0,
+      "path": ["C/O", "A/O", "A/O", "A/O", "A/O", "A/O", "A/O", "A/O"],
+      "rounds_completed": 8,
+      "taxpayer_payoff": 7
+    },
+    "transparent_cooperation": {
+      "authority_payoff": 24,
+      "complete_log": true,
+      "evidence_class": "programmed demonstration",
+      "final_trust": 100,
+      "path": ["C/T", "C/T", "C/T", "C/T", "C/T", "C/T", "C/T", "C/T"],
+      "rounds_completed": 8,
+      "taxpayer_payoff": 24
+    }
+  }
+}

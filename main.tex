@@ -12,33 +12,30 @@
 \newcommand{\CourseName}{Computational Microeconomics}
 \newcommand{\CourseSession}{Autumn 2026 Session 1}
 \newcommand{\Instructor}{Luyao Zhang}
-\newcommand{\WorkshopSession}{[Your assigned workshop session]}
-% Replace these with YOUR fork/project URLs, not the instructor's template.
-\newcommand{\GitHubLink}{[Your project GitHub URL]}
+\newcommand{\WorkshopSession}{Session E}
+\newcommand{\GitHubLink}{\url{https://github.com/cccc-0212/yichen-ps1-overleaf} (code commit: \textbf{TODO after GitHub upload})}
 \newcommand{\TemplateRepository}{\url{https://github.com/sunshineluyao/ps1-overleaf-template}}
-\newcommand{\ColabLink}{[Insert verified Colab URL]}
-\newcommand{\DemoLink}{[Insert verified Hugging Face Space URL]}
+\newcommand{\ColabLink}{\url{https://colab.research.google.com/github/cccc-0212/yichen-ps1-overleaf/blob/main/companion/notebooks/adaptive_tax_game.ipynb}}
+\newcommand{\DemoLink}{\url{https://huggingface.co/spaces/dku-comsci-econ206-2026/yichenshendemo}}
 \newcommand{\coursemeta}{\noindent\textbf{Submission to:} \CourseNumber{} --- \CourseName.\\
 \textbf{Course session:} \CourseSession. \textbf{Workshop:} \WorkshopSession.\\
 \textbf{Instructor:} \Instructor. \textbf{Assignment:} PS1 research proposal.\par\smallskip}
-\title{[A Specific, Researchable Proposal Title]}
-\author{[Your Full Name]}
+\title{Transparent Adaptive Taxation under Limited Information: A Repeated-Game Stress Test}
+\author{Yichen Shen}
 \affiliation{\institution{Duke Kunshan University}\city{Kunshan}\country{China}}
-\email{[Your university email]}
-\renewcommand{\shortauthors}{[Your name]}
+\email{ys479@duke.edu}
+\renewcommand{\shortauthors}{Shen}
 
 \begin{document}
 \begin{teaserfigure}
 \captionsetup{skip=8pt}
 \centering
 \includegraphics[width=\textwidth]{figures/ps1_teaser.pdf}
-\caption{Prospective research design adapted from the class proposal. Economic stochastic choice~\cite{rogers2009}, recursive LLM reasoning~\cite{zhang2025}, human reasoning levels~\cite{camerer2004} and persona audits~\cite{gupta2024} motivate a shared evaluation~\cite{jia2025}. Solid arrows within scenes show conceptual relations; dashed arrows show proposed synthesis. Estimated depth and precision are model-dependent, not direct observations of cognition.}
-\Description{Three disciplinary scenes contain a symbolic payoff matrix, successive belief levels, and a comparison of abstract personas. Dashed paths converge on a proposed evaluation of reasoning depth, decision precision and contextual sensitivity. All objects and text are editable in Draw.io.}
+\caption{Proposed governed feedback loop for adaptive taxation. Household and firm choices generate approved signals; an auditable system uses them to simulate bounded recommendations; a human authority accepts, revises, or rejects each proposal and publishes the rule, reasons, and appeal route. The stress test varies explanation and continuation incentives to distinguish institutional trust~\cite{kirchler2008} from strategic learning~\cite{suttonbarto2018}. Arrows show the proposed mechanism, not an observed causal effect.}
+\Description{A clockwise loop connects households and firms, approved behavioral signals, a bounded AI recommendation, and a human public authority. The center lists experimental comparisons of transparent versus opaque explanation and fixed versus probabilistic continuation. A bottom bar lists compliance, trust, welfare, revenue, volatility, and the event log as outcomes. Every object and label is editable in Draw.io.}
 \label{fig:teaser}
 \end{teaserfigure}
 \maketitle\raggedbottom\coursemeta
-
-\noindent\textcolor{CourseTeal}{\textbf{Template and illustrative figure.}} Adapt this class-example diagram and replace prompts with your own proposal. Fork the class repository and import your fork into Overleaf; see README for steps. Keep five numbered sections within two main pages, including metadata, Figure 1, its caption, and artifact links. Author Notes, references, and appendices follow on separate pages.
 
 \input{sections/proposal}
 \input{appendices/supporting}

@@ -1,11 +1,36 @@
-# Optional synthetic pilot for the class LLM proposal
+# Adaptive-tax computational companion
 
-[Open in Colab](https://colab.research.google.com/github/sunshineluyao/ps1-overleaf-template/blob/main/companion/notebooks/06_ps1_strategic_reasoning_demo.ipynb). This self-contained notebook runs on CPU with no LLM API key.
+This folder contains Yichen Shen's deterministic Python reconstruction of the eight-round taxpayer-authority game used in the PS1 proposal. It replaces the class template's unrelated LLM strategic-reasoning example.
 
-The sample homework uses the in-class imagined Jia et al. (NeurIPS 2025) study: 22 LLMs, 13 settings, 30 baseline trials. This folder supplies a smaller **synthetic classroom pilot**, not that study or a full replication. The notebook and game implement a finite logit cognitive hierarchy with gamma**k precision; the paper uses gamma*k in its TQRE specification. Numerical source and saved outputs are retained from the earlier checked teaching release.
+## What each artifact does
 
-Run the notebook in a fresh CPU session. For a local source check, run `python -m unittest discover -s tests` from this folder after installing requirements.txt. The static game is in hf_space/; open index.html with model.js alongside it. Upload those files and the Space README to Hugging Face to create a hosted demo. Hosting is pending.
+- `src/games.py`: source of truth for the payoff table, bounded trust update, event log, three preset paths, and one-shot benchmark.
+- `tests/test_models.py`: boundary, invalid-input, equilibrium, event-log, and expected-output tests.
+- `notebooks/adaptive_tax_game.ipynb`: self-contained notebook intended for Google Colab.
+- `outputs/adaptive_tax_results.json`: saved deterministic results from a fresh local run.
 
-Use the latest Assignment and Review Guide in ../instructions and optional prompts in ../scaffolding. Reviewers use only strengths, constructive criticism and questions for communication; no numerical peer rating is required. Group project GitHub/Colab links in an Open Science Statement, and the Hugging Face link in a Statement of Contribution to the UN's SDGs (SDG 4 Quality Education).
+## Reproduce locally
 
-Source paper: https://doi.org/10.52202/085713-1955. The cooperation matrix follows Table 1(b); parameter variations and the synthetic pilot are teaching adaptations. Synthetic output is not evidence about actual human or LLM behavior. Educational benefits of the tool have not been measured.
+No third-party packages or API keys are required.
+
+```bash
+cd companion
+python -m unittest discover -s tests
+python -m src.run_validation
+```
+
+Expected preset results are taxpayer payoff / authority payoff / final trust:
+
+- Transparent cooperation: `24 / 24 / 100`
+- Opaque breakdown: `7 / 11 / 0`
+- Mixed recovery: `23 / 19 / 90`
+
+These are programmed demonstrations and implementation checks, not estimates of real taxpayer behavior.
+
+## GitHub, Colab, and Hugging Face
+
+- GitHub project: <https://github.com/cccc-0212/yichen-ps1-overleaf-template>
+- Colab target after this notebook is pushed to `main`: <https://colab.research.google.com/github/cccc-0212/yichen-ps1-overleaf-template/blob/main/companion/notebooks/adaptive_tax_game.ipynb>
+- Interactive Static Space: <https://huggingface.co/spaces/dku-comsci-econ206-2026/yichenshendemo>
+
+The Python/Colab companion verifies the model. The Hugging Face Space provides the interactive learning interface. Neither replaces the other.

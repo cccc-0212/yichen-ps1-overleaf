@@ -1,16 +1,37 @@
 import unittest
-import numpy as np
-from src.games import *
-class Models(unittest.TestCase):
- def test_known_nash(self):
-  A=coordination_matrix();B=A.T
-  for p in [0.,1.,5/6]: self.assertLess(nash_regret(A,B,[p,1-p],[p,1-p]),1e-9)
- def test_out_of_equilibrium(self):
-  A=coordination_matrix();self.assertGreater(nash_regret(A,A.T,[.5,.5],[.5,.5]),.1)
- def test_entry(self):self.assertEqual(entry_spne()[0][:2],('In','Accommodate'))
- def test_ch_limits(self):
-  p,_,_=logit_ch(tau=0);np.testing.assert_allclose(p,[.5,.5])
-  for tau in [0,1.5,5]:
-   p,levels,tail=logit_ch(tau=tau);self.assertAlmostEqual(p.sum(),1);self.assertTrue(np.all(p>=0));self.assertLess(tail,1e-4)
- def test_truncation(self):np.testing.assert_allclose(logit_ch(5,K=16)[0],logit_ch(5,K=24)[0],atol=1e-4)
-if __name__=='__main__':unittest.main()
+from src.games import MAX_ROUNDS, PRESET_PATHS, GameState, one_shot_benchmark, preset_results, run_path, step
+
+
+class AdaptiveTaxGameTests(unittest.TestCase):
+    def test_expected_preset_outputs(self):
+        results = preset_results()
+        self.assertEqual((results["transparent_cooperation"]["taxpayer_payoff"], results["transparent_cooperation"]["authority_payoff"], results["transparent_cooperation"]["final_trust"]), (24, 24, 100))
+        self.assertEqual((results["opaque_breakdown"]["taxpayer_payoff"], results["opaque_breakdown"]["authority_payoff"], results["opaque_breakdown"]["final_trust"]), (7, 11, 0))
+        self.assertEqual((results["mixed_recovery"]["taxpayer_payoff"], results["mixed_recovery"]["authority_payoff"], results["mixed_recovery"]["final_trust"]), (23, 19, 90))
+
+    def test_complete_event_logs(self):
+        for result in preset_results().values():
+            self.assertEqual(result["rounds_completed"], MAX_ROUNDS)
+            self.assertTrue(result["complete_log"])
+
+    def test_trust_bounds(self):
+        self.assertEqual(run_path(PRESET_PATHS["transparent_cooperation"], initial_trust=95).trust, 100)
+        self.assertEqual(run_path(PRESET_PATHS["opaque_breakdown"], initial_trust=5).trust, 0)
+
+    def test_invalid_actions_and_ninth_round(self):
+        with self.assertRaises(ValueError):
+            step(GameState(), "hide", "transparent")
+        state = run_path(PRESET_PATHS["transparent_cooperation"])
+        with self.assertRaises(ValueError):
+            step(state, "C", "T")
+
+    def test_one_shot_benchmark(self):
+        benchmark = one_shot_benchmark()
+        self.assertTrue(benchmark["taxpayer_avoid_strictly_dominant"])
+        self.assertTrue(benchmark["authority_opaque_strictly_dominant"])
+        self.assertEqual(benchmark["unique_one_shot_nash"], "A/O")
+        self.assertEqual(benchmark["pareto_superior_profile"], "C/T")
+
+
+if __name__ == "__main__":
+    unittest.main()

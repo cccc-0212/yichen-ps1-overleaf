@@ -1,41 +1,119 @@
-"""Week 3 classroom models. Synthetic illustrations, not a paper replication."""
-import math
-import numpy as np
+"""Deterministic adaptive-tax repeated game used in Yichen Shen's PS1.
 
-def nash_regret(A, B, x, y):
-    """Maximum one-player gain, with row/column payoff matrices in the same orientation."""
-    A, B, x, y = map(lambda v: np.asarray(v, dtype=float), (A,B,x,y))
-    return max(0., float(np.max(A@y)-x@A@y), float(np.max(x@B)-x@B@y))
+The outputs are programmed demonstrations, not evidence about real taxpayers.
+"""
+from dataclasses import asdict, dataclass, field
+from typing import Iterable, Mapping
 
-def coordination_matrix(safe=5.):
-    if not 0 < safe < 8: raise ValueError('safe must be between 0 and 8')
-    return np.array([[8.,0.],[7.,float(safe)]])
+MAX_ROUNDS = 8
+INITIAL_TRUST = 50
 
-def logit_ch(tau=1.5, gamma=1.2, safe=5., K=16):
-    """Truncated Poisson cognitive hierarchy with logit responses.
-    Level 0 is uniform; level k responds to normalized lower-level beliefs.
-    Precision is gamma**k. This is NOT a QRE fixed-point or a Nash solver.
-    Returns population strategy, level strategies, omitted Poisson mass.
-    """
-    if not 0 <= tau <= 5 or not 1 <= gamma <= 2 or not 1 <= K <= 32:
-        raise ValueError('Use 0<=tau<=5, 1<=gamma<=2, 1<=K<=32')
-    A=coordination_matrix(safe)
-    weights=np.array([math.exp(-tau)*tau**k/math.factorial(k) for k in range(K+1)])
-    strategies=[np.array([.5,.5])]
-    for k in range(1,K+1):
-        belief=weights[:k] @ np.array(strategies) / weights[:k].sum()
-        z=(gamma**k)*(A@belief); z-=z.max()
-        response=np.exp(z); strategies.append(response/response.sum())
-    levels=np.array(strategies)
-    population=(weights/weights.sum())@levels
-    return population,levels,max(0.,float(1-weights.sum()))
+# (taxpayer payoff, authority payoff, trust change)
+RULES: Mapping[tuple[str, str], tuple[int, int, int]] = {
+    ("C", "T"): (3, 3, 10),
+    ("C", "O"): (0, 4, -15),
+    ("A", "T"): (4, 0, -10),
+    ("A", "O"): (1, 1, -10),
+}
 
-def entry_spne(fight=(-1.,-1.), accommodate=(1.,1.), out=(0.,2.)):
-    """Return all backward-induction outcomes, preserving ties."""
-    cont={'Fight':fight,'Accommodate':accommodate}; best=max(v[1] for v in cont.values()); result=[]
-    for action,payoff in cont.items():
-        if payoff[1] != best: continue
-        entrant_best=max(out[0],payoff[0])
-        for initial,p in [('Out',out),('In',payoff)]:
-            if p[0]==entrant_best: result.append((initial,action,p))
-    return result
+PRESET_PATHS: Mapping[str, tuple[tuple[str, str], ...]] = {
+    "transparent_cooperation": (("C", "T"),) * 8,
+    "opaque_breakdown": (("C", "O"),) + (("A", "O"),) * 7,
+    "mixed_recovery": (
+        ("C", "T"), ("C", "T"), ("A", "T"), ("A", "O"),
+        ("C", "T"), ("C", "T"), ("C", "T"), ("C", "T"),
+    ),
+}
+
+
+@dataclass
+class GameState:
+    round: int = 1
+    trust: int = INITIAL_TRUST
+    taxpayer_payoff: int = 0
+    authority_payoff: int = 0
+    event_log: list[dict] = field(default_factory=list)
+
+    def snapshot(self) -> dict:
+        return asdict(self)
+
+
+def _normalize(value: str, allowed: Mapping[str, str], label: str) -> str:
+    key = value.strip().lower()
+    if key not in allowed:
+        raise ValueError(f"invalid {label} action: {value!r}")
+    return allowed[key]
+
+
+def step(state: GameState, taxpayer_action: str, authority_action: str) -> GameState:
+    """Apply one simultaneous action pair and append a fully auditable event."""
+    if state.round > MAX_ROUNDS:
+        raise ValueError(f"the game is limited to {MAX_ROUNDS} rounds")
+    taxpayer = _normalize(
+        taxpayer_action, {"c": "C", "comply": "C", "a": "A", "avoid": "A"}, "taxpayer"
+    )
+    authority = _normalize(
+        authority_action, {"t": "T", "transparent": "T", "o": "O", "opaque": "O"}, "authority"
+    )
+    taxpayer_delta, authority_delta, trust_delta = RULES[(taxpayer, authority)]
+    prior_trust = state.trust
+    state.taxpayer_payoff += taxpayer_delta
+    state.authority_payoff += authority_delta
+    state.trust = min(100, max(0, state.trust + trust_delta))
+    state.event_log.append({
+        "round": state.round,
+        "taxpayer_action": taxpayer,
+        "authority_action": authority,
+        "taxpayer_payoff_delta": taxpayer_delta,
+        "authority_payoff_delta": authority_delta,
+        "trust_before": prior_trust,
+        "trust_delta": trust_delta,
+        "trust_after": state.trust,
+    })
+    state.round += 1
+    return state
+
+
+def run_path(path: Iterable[tuple[str, str]], initial_trust: int = INITIAL_TRUST) -> GameState:
+    """Run one path from a clean state."""
+    if not 0 <= initial_trust <= 100:
+        raise ValueError("initial_trust must be between 0 and 100")
+    state = GameState(trust=initial_trust)
+    for taxpayer, authority in path:
+        step(state, taxpayer, authority)
+    return state
+
+
+def preset_results() -> dict[str, dict]:
+    """Return the three PS1 verification records."""
+    results = {}
+    for name, path in PRESET_PATHS.items():
+        state = run_path(path)
+        results[name] = {
+            "path": ["/".join(actions) for actions in path],
+            "rounds_completed": len(state.event_log),
+            "taxpayer_payoff": state.taxpayer_payoff,
+            "authority_payoff": state.authority_payoff,
+            "final_trust": state.trust,
+            "complete_log": len(state.event_log) == MAX_ROUNDS,
+            "evidence_class": "programmed demonstration",
+        }
+    return results
+
+
+def one_shot_benchmark() -> dict:
+    """Check strict dominance and report the one-shot Nash benchmark."""
+    taxpayer_avoid_dominates = (
+        RULES[("A", "T")][0] > RULES[("C", "T")][0]
+        and RULES[("A", "O")][0] > RULES[("C", "O")][0]
+    )
+    authority_opaque_dominates = (
+        RULES[("C", "O")][1] > RULES[("C", "T")][1]
+        and RULES[("A", "O")][1] > RULES[("A", "T")][1]
+    )
+    return {
+        "taxpayer_avoid_strictly_dominant": taxpayer_avoid_dominates,
+        "authority_opaque_strictly_dominant": authority_opaque_dominates,
+        "unique_one_shot_nash": "A/O" if taxpayer_avoid_dominates and authority_opaque_dominates else None,
+        "pareto_superior_profile": "C/T",
+    }

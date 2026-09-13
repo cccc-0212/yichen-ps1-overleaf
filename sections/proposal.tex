@@ -1,50 +1,46 @@
 \section{Three connected research questions}
-Start from Intellectual Statement II. State the background, motivation, application, affected stakeholders, and strategic tension. Explain your proposal's relationship to a Nobel-recognized foundation and current research.
+Tax policy changes reporting behavior, and those reports inform later policy. This loop combines the efficiency--equity problem in optimal taxation~\cite{mirrlees1971,saez2001,nobel1996} with a new governance risk: opaque learning may undermine legitimacy.
 
-\textbf{Q1---Economics:} [Which incentive, welfare, allocation, or institutional question needs an answer?]\par
-\textbf{Q2---Computation:} [Which model, algorithm, or evaluation makes the answer checkable?]\par
-\textbf{Q3---Behavior:} [Which belief, preference, reasoning limit, or learning mechanism could alter the prediction?]
-
-Explain why the answers depend on one another. Cite relevant economics, computer-science, and behavioral-science papers. Refer to Figure~\ref{fig:teaser} and explain how its mechanism connects your questions.
+\textbf{Q1---Economics:} Under asymmetric information, when can transparent, bounded policy updates sustain compliance and welfare better than opaque updates?\par
+\textbf{Q2---Computation:} Can an auditable finite-state simulator compare those regimes while enforcing bounds and reproducing every transition?\par
+\textbf{Q3---Behavior:} Is any cooperation explained by trust in legitimate authority, or only by payoff-based strategic learning?\par
+Incentives define the benchmark, computation makes the loop checkable, and behavior determines whether transparency changes choices. Figure~\ref{fig:teaser} joins the three channels.
 
 \section{Answer to Q1: incentives and intellectual lineage}
-State a provisional answer or falsifiable hypothesis. Define players, actions versus strategies, payoffs, timing, and information. Name the solution concept and cite its defining paper, such as Nash~\cite{nash1950} or Bayesian equilibrium~\cite{harsanyi1968}. State what the benchmark establishes and what it leaves unresolved. Distinguish hypothetical, observed, estimated, and inherited quantities.
+My hypothesis is that bounded explanations preserve cooperation only when trust or continuation value supplements material payoffs. For eight simultaneous rounds, a taxpayer chooses Comply (C) or Avoid (A), and an authority Transparent (T) or Opaque (O). Model-set payoffs are C/T $=(3,3)$, C/O $=(0,4)$, A/T $=(4,0)$, and A/O $=(1,1)$. Both see the rule, trust score, and prior log, but not private motives. A and O are strictly dominant, making A/O the unique one-shot Nash equilibrium~\cite{nash1950}; C/T is Pareto-superior. Finite repetition with unchanged payoffs does not reverse that benchmark, so persistent C/T requires future incentives, beliefs, or social preferences---not a displayed trust score alone.
 
 \section{Answer to Q2: method and evaluation}
-Explain the computational part of Figure~\ref{fig:teaser}: inputs, algorithm, baseline, metric, and a meaningful mathematical or computational check. Specify your smallest feasible experiment and one modification to the baseline. State the actual outputs obtained; label every untested outcome as expected or planned. Your Colab notebook and interactive game must explain the same research question and identify any differences in model or scope.
+The client-side finite-state game adds payoffs, updates trust by $+10,-15,-10,-10$, clips it to $[0,100]$, and logs every transition. Verified demonstrations produced $24/24$/100 (eight C/T), $7/11$/0 (one C/O then seven A/O), and $23/19$/90 (mixed recovery), where entries are taxpayer payoff/authority payoff/trust. These checks validate code, not behavior. The smallest experiment randomizes explained versus opaque updates with fixed payoffs; a modification varies observability. Colab must reproduce the rules, while Hugging Face provides the interactive interface.
 
 \clearpage\balance
 \section{Answer to Q3: behavior and competing explanations}
-Identify a behavioral mechanism and a competing explanation. Describe evidence that would discriminate between them. Explain how this changes the economic model or computational design. State the limits of what the planned evidence can identify. Synthetic or simulated results do not establish human or real AI behavior. Include a feasible next test and what finding would change your mind.
+The slippery-slope mechanism predicts that transparent authority builds trust and voluntary compliance~\cite{kirchler2008}; strategic learning instead predicts cooperation only when future rewards justify it. A preregistered $2\times2$ test can vary explanation and continuation probability, measuring choices, comprehension, legitimacy, and payoffs. An explanation effect surviving payoff and comprehension controls favors trust; disappearance without continuation incentives favors learning. The model would add either trust-dependent utility or belief-dependent continuation value and log them separately. A classroom sample cannot identify population or policy effects. I would reject the trust claim if explanation changes comprehension but not behavior or legitimacy.
 
 
 \section{Advanced development and future directions}
-Build on a named Nobel laureate's defining work and cite the award record. Identify an enduring human question---such as cooperation, fairness, trust or collective choice---and explain what the foundation establishes. Add a relevant Turing Award foundation where it clarifies the computational lineage.
-
-Explain what is distinctive about today's environment and technology, what current research leaves unresolved, and how your proposal advances that boundary. State the economic, computational and behavioral contributions and the new insight their integration makes possible.
+Mirrlees established how private information constrains tax incentives~\cite{mirrlees1971,nobel1996}; Sutton and Barto's Turing-recognized work established learning from feedback~\cite{acm2024}. The enduring question is how institutions secure fair cooperation without complete surveillance. Today's software can update rapidly and log decisions, but when recommendations remain incentive-compatible, understandable, and legitimate is unresolved. I contribute a bounded-update model, reproducible audit, and test separating trust from continuation incentives.
 
 \begin{table}[h]\caption{From laureate foundations to a new interdisciplinary contribution.}
 \begin{tabularx}{\columnwidth}{@{}p{1.6cm}Y@{}}\toprule
 \textbf{Horizon}&\textbf{Milestone and evidence}\\\midrule
-Foundation&[Laureate, defining work, enduring question and retained insight.]\\
-PS1&[Current-era setting, working baseline and meaningful check.]\\
-Next study&[New interdisciplinary explanation or design; a discriminating test.]\\
-Longer term&[Broader validation, benefits and reusable knowledge or tools.]\\
-2056&[Integrated contribution and evidence connecting it to the ambition below.]\\\bottomrule
+Foundation&Mirrlees: private-information tax incentives; Sutton--Barto: feedback learning.\\
+PS1&Auditable game; three path checks.\\
+Next study&Vary explanation and continuation value.\\
+Longer term&Add diverse samples, legal rules, and privacy audits.\\
+2056&Contestable adaptive institutions supported by field evidence.\\\bottomrule
 \end{tabularx}\end{table}
 
 \noindent\textbf{Expected 2056 Nobel Prize and Turing Award contribution statement.}
-By 2056, I aspire to be recognized for [theory, method or design] addressing [enduring human question] in [the current era's distinctive environment]. Building on [laureates and cited foundations], I will integrate [economics], [computer science] and [behavioral science] to advance [specific boundary]. Progress will be demonstrated by [milestones and evidence], with intellectual merits in [knowledge] and practical impacts for [people and institutions].
+By 2056, I aspire to be recognized for designing adaptive tax institutions that people can understand and challenge. Building on Mirrlees and Sutton--Barto, I will integrate public economics, auditable computation, and behavioral evidence to determine when learning improves opportunity without sacrificing privacy or legitimacy. Evidence must progress from reproducible pilots to discriminating experiments, cross-jurisdiction validation, and accountable deployment.
 
 \subsection*{Open Science Statement}
 \textbf{GitHub:} \GitHubLink\\
 \textbf{Google Colab:} \ColabLink\par
-[Identify available code, data or synthetic inputs, notebook, dependencies, outputs, release/commit and actual reuse terms. Give the shortest reproducible run instruction.]
+Synthetic inputs and client-side code reproduce the three paths. Before submission, add the final commit and verify a clean Colab ``Run all.'' Source-specific licenses remain in their repositories.
 
 \subsection*{Statement of Contribution to the UN's SDGs}
 \textbf{Hugging Face:} \DemoLink\\
-Through an open-access [tool], this project aims to support \textbf{SDG 4---Quality Education}~\cite{sdg4} by helping [audience] learn [concept] through [interaction]. [State access needs, learning instructions and a feasible evaluation.] Distinguish the resource released from benefits that remain to be evaluated.
+The open browser game supports \textbf{SDG 4---Quality Education}~\cite{sdg4}: students choose both players' actions, inspect the log, and compare paths to learn repeated games, transparency, and trust. A pre/post prediction task could assess learning; improvement remains untested.
 
 \subsection*{Submission milestones}
 First draft: September 13, 2026, 11:00 P.M. Beijing time (UTC+8). Class review: September 14. Proposed: rebuttal September 16 and revised submission September 20, both at 11:00 P.M. Update Appendix~\ref{app:abstract} with each reflection and revision.
-

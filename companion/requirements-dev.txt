@@ -1,4 +1,1 @@
--r requirements.txt
-nbformat
-nbclient
-ipykernel
+# Tests use Python's standard-library unittest module.

@@ -1,54 +1,81 @@
 \clearpage\nobalance
 \section*{Author Notes}
 \subsection*{Acknowledgements}
-I thank Prof. Luyao Zhang, Program Chair, and Prof. Ken Rogerson, Program Discussant, of the \emph{2056 Nobel and Turing Laureate Program Launch Workshop}, held at Duke Kunshan University on September 7, 2026. I also thank [full name of teammate 1] and [full name of teammate 2], my teammates in [session number and full session title], and the rest of the COMSCI/ECON 206 Autumn 2026 Session 1 class for their questions and discussion. [Identify a specific contribution you actually used.] I am responsible for the proposal and remaining errors.
+I thank Prof. Luyao Zhang, Program Chair, and Prof. Ken Rogerson, Program Discussant, of the \emph{2056 Nobel and Turing Laureate Program Launch Workshop}, held at Duke Kunshan University on September 7, 2026. I also thank Gihun and Zimu, my teammates in session E, and the rest of the COMSCI/ECON 206 Autumn 2026 Session 1 class for their questions and discussion. Lin Zhang's earlier feedback helped me replace the claim of an autonomous ``self-evolving AI tax system'' with a human-authorized, bounded, and contestable institution. I am responsible for the proposal and remaining errors.
 \subsection*{Individual contribution}
-[State what you personally designed, implemented, wrote, checked, and adapted. Identify shared code or other contributions accurately. Program roles and feedback do not automatically imply coauthorship.]
+I selected the adaptive-tax research question, designed the taxpayer--authority game and its payoff and trust rules, supplied the field photographs, tested all three eight-round paths in the deployed Space, and made the final decisions about claims and limitations. I adapted the course Overleaf structure and Figure~\ref{fig:teaser} to this project. The course template and cited open-source tools are credited separately and do not imply coauthorship.
 
 \bibliographystyle{ACM-Reference-Format}\bibliography{references}
 \appendix
 \section{Technical details and reproducibility}
-[Supply derivations, inputs, package versions, seed where relevant, actual outputs and limitations. Identify repository commit, notebook cells and demo version. Include the fresh-run record.]
+The game state is $(r,t,p_T,p_A,L)$: round, trust, taxpayer payoff, authority payoff, and event log. It begins at $(1,50,0,0,[])$. Each action pair selects a payoff and trust increment from Table~\ref{tab:rules}; the update is $t'=\min\{100,\max\{0,t+\Delta t\}\}$. There is no random seed because the current browser artifact is deterministic. Reset restores the initial state.
+
+\begin{table}[h]
+\caption{Programmed stage-game and trust rules.}
+\label{tab:rules}
+\centering
+\begin{tabular}{@{}llcc@{}}\toprule
+Taxpayer & Authority & Payoff $(T,A)$ & $\Delta$ trust\\\midrule
+Comply & Transparent & $(3,3)$ & $+10$\\
+Comply & Opaque & $(0,4)$ & $-15$\\
+Avoid & Transparent & $(4,0)$ & $-10$\\
+Avoid & Opaque & $(1,1)$ & $-10$\\\bottomrule
+\end{tabular}
+\end{table}
+
+The deployed Static Space was accessed and personally tested on September 6, 2026. Eight C/T rounds returned $24/24$, trust 100; C/O followed by seven A/O returned $7/11$, trust 0; and C/T, C/T, A/T, A/O, then four C/T returned $23/19$, trust 90. Each run produced eight log entries; the first two also checked the upper and lower trust bounds. The implementation uses client-side HTML, CSS, and JavaScript with no backend, database, API key, paid service, or personal-data collection. The Python companion independently reproduces the payoff, trust-bound, event-log, invalid-input, and one-shot-equilibrium checks using only the standard library. It does not establish calibrated tax payoffs, legal accuracy, real compliance behavior, or population effects. After the code is pushed to GitHub, the Colab notebook will be run from a clean session and the submitted code commit recorded in the Open Science Statement.
 \subsection{AI-use disclosure}
-AI-Assisted drafting and debugging are permitted after initial independent reasoning. Initial reasoning and handwritten reflection are Human-Only. Record tool/model, date, purpose, significant prompts, accepted or rejected suggestions, human changes and verification. If none, state ``No generative AI was used.'' The human author is responsible for every claim, citation and computation.
+I used OpenAI Codex in the Codex desktop interface on September 13, 2026, after developing the research direction in my first two intellectual statements. It helped organize and edit the proposal, adapt the LaTeX template and editable teaser, check the payoff arithmetic, and format references and appendices. I retained the human-authority boundary, the trust-versus-incentives distinction, and explicit limits on synthetic evidence; I rejected any claim that the game demonstrates real taxpayer behavior. I will review the final Overleaf rendering, verify the URLs and citations, and remain responsible for every claim and computation.
 
 \section{Cumulative Intellectual Development}
-This proposal develops my Intellectual Statement II through the \emph{2056 Nobel and Turing Laureate Program Launch Workshop}, held on September 7, 2026 at Duke Kunshan University, IB 2050. Program Chair: Prof. Luyao Zhang. Program Discussant: Prof. Ken Rogerson. My session: [number and full title]. My role: [assigned role]. My teammates: [full name 1] and [full name 2]. I acknowledge their contributions and the rest of the class's questions and discussion.
+This proposal develops my Intellectual Statements I and II through the \emph{2056 Nobel and Turing Laureate Program Launch Workshop}, held on September 7, 2026 at Duke Kunshan University, IB 2050. Program Chair: Prof. Luyao Zhang. Program Discussant: Prof. Ken Rogerson. My session: Session E. My role: Economist. My teammates: Gihun and Zimu. I acknowledge their contributions and the rest of the class's questions and discussion.
 
-[Trace an earlier claim, a specific dated comment or piece of evidence, and the resulting revision with its intellectual consequence. Do not write only a chronological diary. Retain and revise the 2056 contribution statement.]
-
-Appendix~\ref{app:abstract} contains the structured abstract in the cumulative reflection format. Update its eight rows and preserve the prior version. The Expected 2056 Nobel Prize and Turing Award contribution statement in Section 5 must follow from the foundation, current-era boundary and interdisciplinary milestones.
+My first statement proposed a ``self-evolving AI tax system.'' Lin Zhang's August 30 feedback and my subsequent reflection exposed the risk that this language assigned legislative authority to AI. Intellectual Statement II therefore made public officials the decision makers and required bounded, explained recommendations. The September 4 Tencent and museum observations then sharpened explanation into an interface requirement: feedback should be familiar, while rules, evidence, limits, and trade-offs should remain visible. Finally, the Week 2 implementation showed that a trust counter can be computed reproducibly but does not itself explain behavior. This proposal consequently separates the Nash benchmark, trust-based utility, and continuation incentives, and proposes a test that can discriminate among them. During the September 7 workshop, a classmate asked whether the trust score actually changed players' incentives or merely displayed the history of play. This question led me to treat trust as a mechanism to be tested rather than an assumed explanation and to vary continuation incentives separately in the proposed experiment.
+Appendix~\ref{app:abstract} records the eight-part structured abstract in the cumulative reflection format and connects the 2056 contribution statement to the foundation, current-era boundary, and interdisciplinary milestones.
 
 \section{Field and open-source inspiration}
-The \emph{Joint Interdisciplinary Field Trip---Technology, Computation, Culture \& Society in Action} took place on September 4, 2026. Record your actual observations at \textbf{Tencent Shanghai Office} and \textbf{Shanghai Science and Technology Museum}. State attendance accurately.
+I attended the \emph{Joint Interdisciplinary Field Trip---Technology, Computation, Culture \& Society in Action} on September 4, 2026, visiting \textbf{Tencent Shanghai Office} and \textbf{Shanghai Science and Technology Museum}. The observations below are first-hand; the design lessons are my interpretations, not causal evidence.
 
-[Retain one industry photograph and one public-sector photograph from the earlier assignment. Each caption gives exact site, September 4, 2026 visit date, photographer/source, activity or exhibit, and relevance. Distinguish observation from interpretation; connect each setting to an open-source inspiration, subsequent research, and proposed practical value. If you lacked first-hand access, identify an attributed alternative instead of claiming attendance.]
+\begin{figure*}[ht]
+\centering
+\begin{minipage}[t]{0.48\textwidth}\centering
+\includegraphics[width=\linewidth,height=4.2cm,keepaspectratio]{figures/tencent_qq_exhibit.png}
+\small\textbf{(a) Tencent Shanghai Office, September 4, 2026.} Photograph by the author. The exhibit presented the first-generation QQ design and its pager-like notification sound. I interpret the familiar cue as inspiration for explanations that help users recognize a policy update.
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\textwidth}\centering
+\includegraphics[width=\linewidth,height=4.2cm,keepaspectratio]{figures/shanghai_museum_aircraft.png}
+\small\textbf{(b) Shanghai Science and Technology Museum, September 4, 2026.} Photograph by the author. An early aircraft display left its engine and supports visible. I interpret this as inspiration for exposing a recommendation's rule, evidence, limits, and trade-off.
+\end{minipage}
+\caption{Field evidence retained from Intellectual Statement II. The photographs document exhibits; the proposed interface implications remain hypotheses.}
+\Description{Left: a first-generation QQ penguin exhibit beside a pager and explanatory text. Right: an early aircraft displayed indoors with its radial engine and structural supports visible.}
+\label{fig:field}
+\end{figure*}
+
+EconML 0.16.0 can estimate heterogeneous effects offline, but it cannot remove confounding from poor data~\cite{econml}. OpenFisca Core 44.7.0 can turn public tax rules into inspectable code, but it requires maintained jurisdiction-specific packages and does not predict behavior~\cite{openfisca}. Together they suggest a division of labor: estimate responses cautiously, execute legal rules transparently, and keep policy authority with humans. Potential private-sector value is testing whether automated messages are understood across user groups; public-sector value is showing how a tax or benefit result follows from an inspectable rule.
 
 \section{Review response and revision record}
-[Retain v1, both peer reviews, author rebuttal, reviewer follow-up and v2. Use the three review themes: strengths to retain, constructive concerns to address, and questions to clarify. Explain your decisions, changed locations and actual verification results. Justify any retained approach or deferred work.]
+This is the September 13 v1 draft. Peer reviews, author response, reviewer follow-up, and v2 are pending. Preserve this source and compiled PDF before revision. After the September 14 review, record (1) strengths retained, (2) constructive concerns and changed locations, and (3) questions answered or deferred, together with verification results. Do not overwrite the v1 record.
 
 \clearpage\onecolumn
 \section{Structured abstract and cumulative proposal map}\label{app:abstract}
-Update this structured abstract with each cumulative reflection. Replace each prompt with a brief, concrete entry and retain earlier versions. The first seven rows summarize the research; the final row records feedback and revision. Detailed optional prompts are in the separate Scaffolding Companion.
+The first seven rows summarize the current research proposal; the final row records feedback and the resulting intellectual revision.
 \par\medskip
 \begin{table}[H]
-\caption{Appendix E structured abstract template; retain the eight-row proposal structure.}
+\caption{Appendix E structured abstract and cumulative proposal map.}
 \label{tab:abstract-map}
 \renewcommand{\arraystretch}{1.18}
 \begin{tabularx}{\textwidth}{@{}p{0.27\textwidth}Y@{}}
 \toprule
 \textbf{Proposal element} & \textbf{Current statement / change} \\
 \midrule
-Background & State the strategic setting, established knowledge and unresolved issue. Cite the key foundation. \\
-Motivation and application & Explain why the issue matters now, the application scenario, affected people and the need the project addresses. \\
-Three connected questions & State one economics question, one computer-science question and one behavioral-science question. End with the integrated question that requires all three. \\
-Method and model assumptions & Specify players, actions or strategies, incentives, timing and information; then the model, baseline, computation and evidence needed. \\
-Results or expected results & State what was actually obtained and label its evidence type. Separately state expected results, the test and what finding would challenge the claim. \\
-Intellectual merits & Explain what is learned beyond the cited foundation and why integrating the three disciplines changes the answer. \\
-Practical impacts & Identify private- and public-sector value. Explain the open-access learning tool's intended contribution to SDG 4 and how its usefulness could be assessed. \\
-Feedback received and revision made & Name the dated feedback source, earlier claim, actual revision and intellectual consequence. Preserve prior versions; state accurately if feedback is pending. \\
+Background & Adaptive tax recommendations create a feedback loop: behavior changes the data used for later policy. Mirrlees established incentive constraints under private information; the unresolved issue is legitimate adaptation. \\
+Motivation and application & Faster policy software may improve opportunity but can also invite gaming, surveillance, or distrust. Taxpayers, officials, and beneficiaries need updates that are effective and contestable. \\
+Three connected questions & Economics: when do bounded transparent updates improve compliance and welfare? Computation: can an auditable simulator test them? Behavior: does trust or strategic learning explain cooperation? Integration is required because each answer changes the others. \\
+Method and model assumptions & An eight-round taxpayer--authority game compares Comply/Avoid and Transparent/Opaque under public rules but private motives. A deterministic state machine records payoffs, bounded trust, and every transition; the next study randomizes transparency and continuation value. \\
+Results or expected results & Three programmed paths reproduce $24/24$/100, $7/11$/0, and $23/19$/90 (payoffs/trust). These are implementation checks. I expect transparent bounded feedback to support cooperation; no behavioral effect would challenge the claim. \\
+Intellectual merits & The proposal connects incentive-compatible taxation, auditable feedback algorithms, and a discriminating behavioral test, while showing why a computed trust score is not behavioral evidence. \\
+Practical impacts & Firms could test message comprehension; agencies could expose executable benefit rules. The open browser game supports SDG 4 instruction; a pre/post prediction task would test learning value. \\
+Feedback received and revision made & August 30 feedback from Lin Zhang and later reflection changed an autonomous ``self-evolving'' system into human-authorized, bounded recommendations. September 4 field evidence added visible explanations. During the September 7 workshop, a classmate asked whether the trust score changed players’ incentives or merely summarized the history of play. I therefore separated trust-based utility from continuation incentives and added a \(2 \times 2\) test varying explanation transparency and continuation probability. Peer review is pending. \\
 \bottomrule
 \end{tabularx}
 \end{table}
-\noindent Keep field observations, photographs, literature notes, open-source inspirations and AI-use disclosure in the supporting sections. Distinguish observation, interpretation and proposed future evidence. The Open Science Statement groups GitHub and Colab; the Statement of Contribution to the UN's SDGs groups the Hugging Face learning tool.
-
